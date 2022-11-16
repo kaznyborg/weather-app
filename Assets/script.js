@@ -14,7 +14,7 @@ if (previousSearchHistory) {
     previousSearchHistory = []
 }
 
-for (var i = 0; i< previousSearchHistory.length; i++) {
+for (var i = 0; i < previousSearchHistory.length; i++) {
     var historyBtn = document.createElement('button')
     var historyItem = previousSearchHistory[i]
     historyBtn.textContent = historyItem
@@ -27,7 +27,7 @@ for (var i = 0; i< previousSearchHistory.length; i++) {
 
 var API_KEY = 'a608b72ea4044e521e75dd30461413b7'
 function getGeoLocation(query, limit = 5) {
-    return fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${limit}&appid=${API_KEY}`)
+    return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${limit}&appid=${API_KEY}`)
 }
 
 function getCurrentWeather(arguments) {
@@ -57,9 +57,9 @@ function displayWeatherData(weatherData) {
     weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
     var currentWeatherStatement = document.createElement('p')
             currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].discription}` 
-                `${weatherData.current[0].temp}: the temprature is ${weatherData.current[0].temp}`,
-                `${weatherData.current[0].humidity}: the humidity is ${weatherData.current[0].humidity}`,
-                `${weatherData.current[0].wind_speed}: the wind is blowing ${weatherData.current[0].wind_speed}`
+                // `${weatherData.current[0].temp}: the temprature is ${weatherData.current[0].temp}`,
+                // `${weatherData.current[0].humidity}: the humidity is ${weatherData.current[0].humidity}`,
+                // `${weatherData.current[0].wind_speed}: the wind is blowing ${weatherData.current[0].wind_speed}`
             document.body.appendChild(weatherPicture)
             document.body.appendChild(currentWeatherStatement)
             //document.body.textContent = JSON.stringify(weatherData, null, 2) 
