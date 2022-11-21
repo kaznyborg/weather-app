@@ -1,4 +1,3 @@
-
 var input = document.querySelector('#input')
 
 input.addEventListener('keyup', function(event) {
@@ -31,7 +30,19 @@ function getGeoLocation(query, limit = 5) {
 }
 
 function getCurrentWeather(arguments) {
-    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
+  return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
+}
+
+function getLocation(callback) {
+  console.log('this work')
+  if (navigator.geolocation) {
+    console.log('this did work')
+    navigator.geolocation.getCurrentPosition(
+      callback, (error) => console.log(error)
+    );
+  } else {
+    console.log('error')
+  }
 }
 
 function addToHistory(location) {
@@ -51,27 +62,26 @@ function addToHistory(location) {
         }
 }
 
+// A function that displays the weather data
 function displayWeatherData(weatherData) {
-    console.log(weatherData)
-    var weatherPicture = document.createElement('img')
-    weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
-    var currentWeatherStatement = document.createElement('p')
-            currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].discription}` 
-                // `${weatherData.current[0].temp}: the temprature is ${weatherData.current[0].temp}`,
-                // `${weatherData.current[0].humidity}: the humidity is ${weatherData.current[0].humidity}`,
-                // `${weatherData.current[0].wind_speed}: the wind is blowing ${weatherData.current[0].wind_speed}`
-            document.body.appendChild(weatherPicture)
-            document.body.appendChild(currentWeatherStatement)
-            //document.body.textContent = JSON.stringify(weatherData, null, 2) 
-            addToHistory(location)        
+  console.log(weatherData)
+  var weatherPicture = document.createElement('img')
+  weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+  var currentWeatherStatement = document.createElement('p')
+  currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}, 
+  the temprature is ${weatherData.main.temp}F, the humidity is ${weatherData.main.humidity}%, the wind is blowing ${weatherData.wind.speed}mph`
+  document.body.appendChild(weatherPicture)
+  document.body.appendChild(currentWeatherStatement)
+  addToHistory(location)
 }
 
 function createWeatherDisplay(location) {
    return getGeoLocation(location)
-    .then(function(Response) {
-        return Response.json()
+    .then(function(response) {
+        return response.json()
     })
     .then(data => {
+      console.log(data)
         if (data.length === 0) {
             var errorEl = document.createElement('p')
             errorEl.textContent = `We couln't find ${location}`
@@ -86,9 +96,43 @@ function createWeatherDisplay(location) {
             document.body.textContent = error.message 
          })
         }
-        
     })
     .catch(error => {
     document.body.textContent = error.message
     })
 }
+
+
+
+
+
+// A function that displays a loading message
+function startLoading() {
+  var loading = document.createElement('p')
+  loading.setAttribute('id', 'loading')
+  loading.textContent = 'Loading...'
+  document.body.appendChild(loading)
+}
+
+// Start the loading message
+startLoading()
+// Get the current location, based on the users location
+var current = getLocation(function(current) {
+  getCurrentWeather({ lat: current.coords.latitude, lon: current.coords.longitude })
+  .then(weatherResponse => weatherResponse.json())
+  .then(weatherData => {
+    displayWeatherData(weatherData)
+    document.querySelector('#loading').remove()
+  })
+  .catch(error => {
+    document.body.textContent = error.message
+  })
+})
+
+
+
+
+
+
+
+
