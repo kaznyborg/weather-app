@@ -1,4 +1,6 @@
 var input = document.querySelector('#input')
+var currentWeather = document.querySelector('#currentWeather')
+var forecastWeather = document.querySelector('#forecastWeather')
 
 input.addEventListener('keyup', function(event) {
     if (event.key === 'Enter') {
@@ -9,12 +11,15 @@ input.addEventListener('keyup', function(event) {
 var previousSearchHistory = localStorage.getItem('history')
 if (previousSearchHistory) {
     previousSearchHistory = JSON.parse(previousSearchHistory)
+    previousSearchHistory.push(location)
+    localStorage.setItem('history', JSON.stringify(previousSearchHistory))
 } else {
     previousSearchHistory = []
 }
 
 for (var i = 0; i < previousSearchHistory.length; i++) {
     var historyBtn = document.createElement('button')
+    historyBtn.setAttribute('id', 'history')
     var historyItem = previousSearchHistory[i]
     historyBtn.textContent = historyItem
     historyBtn.addEventListener('click', function(event) {
@@ -33,8 +38,11 @@ function getCurrentWeather(arguments) {
   return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
 }
 
+function getForecastWeather(arguments) {
+  return fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${arguments.lat}&lon=${arguments.lon}&units=${'imperial'}&appid=${API_KEY}`)
+}
+
 function getLocation(callback) {
-  console.log('this work')
   if (navigator.geolocation) {
     console.log('this did work')
     navigator.geolocation.getCurrentPosition(
@@ -45,17 +53,18 @@ function getLocation(callback) {
   }
 }
 
-function addToHistory(location) {
+function addToHistory() {
     var searchHistory = localStorage.getItem('history')
     if (searchHistory) {
         searchHistory = JSON.parse(searchHistory)
         for (var i = 0; i < searchHistory.length; i++) {
             if (searchHistory[i] === location) {
                 return
+            } else {
+              searchHistory.push(location)
+              localStorage.setItem('history', JSON.stringify(searchHistory))
             }
         }
-        searchHistory.push(location)
-        localStorage.setItem('history', JSON.stringify(searchHistory))
         }else {
             searchHistory = [location]
             localStorage.setItem('history', JSON.stringify(searchHistory))
@@ -63,16 +72,98 @@ function addToHistory(location) {
 }
 
 // A function that displays the weather data
+  //display current weather
 function displayWeatherData(weatherData) {
   console.log(weatherData)
   var weatherPicture = document.createElement('img')
+  weatherPicture.setAttribute("class", "currentImg");
   weatherPicture.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+  var city = document.createElement('p')
+  city.setAttribute("class", "currentCity");
+  city.textContent = `${weatherData.name}`
   var currentWeatherStatement = document.createElement('p')
+  currentWeatherStatement.setAttribute("class", "currentWeather")
   currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}, 
   the temprature is ${weatherData.main.temp}F, the humidity is ${weatherData.main.humidity}%, the wind is blowing ${weatherData.wind.speed}mph`
   document.body.appendChild(weatherPicture)
+  document.body.appendChild(city)
   document.body.appendChild(currentWeatherStatement)
   addToHistory(location)
+}
+
+//display forcast
+function displayForecastData(forecastData){
+   console.log(forecastData)
+   var forecastCity = document.createElement('p')
+   forecastCity.setAttribute("class", "forecastCity")
+   forecastCity.textContent = `${forecastData.city.name}`
+   function day1(){
+      var day1 = document.createElement('p')
+      day1.setAttribute("class", "day")
+      var forecastPicture = document.createElement(`img`)
+      forecastPicture.setAttribute("class", "forcastImg")
+      forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[0].weather[0].icon}@2x.png`
+      var forecastStatement = document.createElement('p')
+      forecastStatement.setAttribute("class", "forecastWeather")
+      forecastStatement.textContent = `${forecastData.list[0].weather[0].main}: it is currently ${forecastData.list[0].weather[0].description}, 
+      the temprature is ${forecastData.list[0].main.temp}F, the humidity is ${forecastData.list[0].main.humidity}%, the wind is blowing ${forecastData.list[0].wind.speed}mph`
+      document.body.appendChild(forecastPicture)
+      document.body.appendChild(forecastCity)
+      document.body.appendChild(forecastStatement)
+    }
+    function day2(){
+      var forecastPicture = document.createElement(`img`)
+      forecastPicture.setAttribute("class", "forcastImg")
+      forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[8].weather[0].icon}@2x.png`
+      var forecastStatement = document.createElement('p')
+      forecastStatement.setAttribute("class", "forecastWeather")
+      forecastStatement.textContent = `${forecastData.list[8].weather[0].main}: it is currently ${forecastData.list[8].weather[0].description}, 
+      the temprature is ${forecastData.list[8].main.temp}F, the humidity is ${forecastData.list[8].main.humidity}%, the wind is blowing ${forecastData.list[8].wind.speed}mph`
+      document.body.appendChild(forecastPicture)
+      document.body.appendChild(forecastCity)
+      document.body.appendChild(forecastStatement)
+    }
+    function day3(){
+      var forecastPicture = document.createElement(`img`)
+      forecastPicture.setAttribute("class", "forcastImg")
+      forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[16].weather[0].icon}@2x.png`
+      var forecastStatement = document.createElement('p')
+      forecastStatement.setAttribute("class", "forecastWeather")
+      forecastStatement.textContent = `${forecastData.list[16].weather[0].main}: it is currently ${forecastData.list[16].weather[0].description}, 
+      the temprature is ${forecastData.list[16].main.temp}F, the humidity is ${forecastData.list[16].main.humidity}%, the wind is blowing ${forecastData.list[16].wind.speed}mph`
+      document.body.appendChild(forecastPicture)
+      document.body.appendChild(forecastCity)
+      document.body.appendChild(forecastStatement)
+    }
+    function day4(){
+      var forecastPicture = document.createElement(`img`)
+      forecastPicture.setAttribute("class", "forcastImg")
+      forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[24].weather[0].icon}@2x.png`
+      var forecastStatement = document.createElement('p')
+      forecastStatement.setAttribute("class", "forecastWeather")
+      forecastStatement.textContent = `${forecastData.list[24].weather[0].main}: it is currently ${forecastData.list[24].weather[0].description}, 
+      the temprature is ${forecastData.list[24].main.temp}F, the humidity is ${forecastData.list[24].main.humidity}%, the wind is blowing ${forecastData.list[24].wind.speed}mph`
+      document.body.appendChild(forecastPicture)
+      document.body.appendChild(forecastCity)
+      document.body.appendChild(forecastStatement)
+    }
+    function day5(){
+      var forecastPicture = document.createElement(`img`)
+      forecastPicture.setAttribute("class", "forcastImg")
+      forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[32].weather[0].icon}@2x.png`
+      var forecastStatement = document.createElement('p')
+      forecastStatement.setAttribute("class", "forecastWeather")
+      forecastStatement.textContent = `${forecastData.list[32].weather[0].main}${forecastData.list[32].weather[0].description}, 
+      ${forecastData.list[32].main.temp}F, ${forecastData.list[32].main.humidity}%, ${forecastData.list[32].wind.speed}mph`
+      document.body.appendChild(forecastPicture)
+      document.body.appendChild(forecastCity)
+      document.body.appendChild(forecastStatement)
+    }
+    day1();
+    day2();
+    day3();
+    day4();
+    day5();
 }
 
 function createWeatherDisplay(location) {
@@ -91,7 +182,13 @@ function createWeatherDisplay(location) {
             .then(weatherResponse => weatherResponse.json())
             .then(weatherData => {
                 displayWeatherData(weatherData)
+               
         })
+          getForecastWeather({ lat: data[0].lat, lon: data[0].lon})
+          .then(forecastResponse => forecastResponse.json())
+          .then(forecastData => {
+            displayForecastData(forecastData)
+          })
         .catch(error => {
             document.body.textContent = error.message 
          })
@@ -124,6 +221,11 @@ var current = getLocation(function(current) {
     displayWeatherData(weatherData)
     document.querySelector('#loading').remove()
   })
+  getForecastWeather({ lat: current.coords.latitude, lon: current.coords.longitude})
+          .then(forecastResponse => forecastResponse.json())
+          .then(forecastData => {
+            displayForecastData(forecastData)
+          })
   .catch(error => {
     document.body.textContent = error.message
   })
