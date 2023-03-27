@@ -1,0 +1,32 @@
+*{
+    color: black;
+    background-color: skyblue;
+}
+
+#searchBar{
+    margin: 3px;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#currentWeather{
+    
+}
+
+#forecastWeather{
+    
+}
+
+#forecastCity{
+    
+}
+
+#day{
+    
+}
+
+#forecastImg{
+    
+}
