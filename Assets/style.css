@@ -1,11 +1,32 @@
-.currentImg{
-
+*{
+    color: black;
+    background-color: skyblue;
 }
 
-.currentCity{
-
+#searchBar{
+    margin: 3px;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.currentWeather{
+#currentWeather{
     
+}
+
+#forecastWeather{
+    
+}
+
+#forecastCity{
+    
+}
+
+#day{
+    
+}
+
+#forecastImg{
+
 }

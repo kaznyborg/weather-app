@@ -1,6 +1,9 @@
 var input = document.querySelector('#input')
-var currentWeather = document.querySelector('#currentWeather')
-var forecastWeather = document.querySelector('#forecastWeather')
+
+var currentWeather = document.querySelector('.currentWeather')
+var forecastWeather = document.querySelector('.forecastWeather')
+var searchBar = document.querySelector(`.searchBar`)
+
 
 input.addEventListener('keyup', function(event) {
     if (event.key === 'Enter') {
@@ -26,7 +29,7 @@ for (var i = 0; i < previousSearchHistory.length; i++) {
         createWeatherDisplay(event.target.textContent)
     })
 
-    document.body.appendChild(historyBtn)
+    searchBar.appendChild(historyBtn)
 }
 
 var API_KEY = 'a608b72ea4044e521e75dd30461413b7'
@@ -85,69 +88,91 @@ function displayWeatherData(weatherData) {
   currentWeatherStatement.setAttribute("class", "currentWeather")
   currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}, 
   the temprature is ${weatherData.main.temp}F, the humidity is ${weatherData.main.humidity}%, the wind is blowing ${weatherData.wind.speed}mph`
-  document.body.appendChild(weatherPicture)
-  document.body.appendChild(city)
-  document.body.appendChild(currentWeatherStatement)
+
+  currentWeather.appendChild(weatherPicture)
+  currentWeather.appendChild(city)
+  currentWeather.appendChild(currentWeatherStatement)
+
   addToHistory(location)
 }
 
 //display forcast
 function displayForecastData(forecastData){
    console.log(forecastData)
-   var forecastCity = document.createElement('p')
+
+   var forecastCity = document.createElement('div')
    forecastCity.setAttribute("class", "forecastCity")
    forecastCity.textContent = `${forecastData.city.name}`
+   forecastWeather.appendChild(forecastCity)
+
    function day1(){
-      var day1 = document.createElement('p')
+      var day1 = document.createElement('day1')
+
       day1.setAttribute("class", "day")
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[0].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
-      forecastStatement.textContent = `${forecastData.list[0].weather[0].main}: it is currently ${forecastData.list[0].weather[0].description}, 
-      the temprature is ${forecastData.list[0].main.temp}F, the humidity is ${forecastData.list[0].main.humidity}%, the wind is blowing ${forecastData.list[0].wind.speed}mph`
-      document.body.appendChild(forecastPicture)
-      document.body.appendChild(forecastCity)
-      document.body.appendChild(forecastStatement)
+
+      forecastStatement.textContent = `${forecastData.list[0].weather[0].main}${forecastData.list[0].weather[0].description}, 
+     ${forecastData.list[0].main.temp}F ${forecastData.list[0].main.humidity}%${forecastData.list[0].wind.speed}mph`
+      forecastWeather.appendChild(day1);
+      day1.appendChild(forecastPicture)
+      day1.appendChild(forecastStatement)
     }
     function day2(){
+      var day2 = document.createElement('day2')
+      day2.setAttribute("class", "day")
+
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[8].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
-      forecastStatement.textContent = `${forecastData.list[8].weather[0].main}: it is currently ${forecastData.list[8].weather[0].description}, 
-      the temprature is ${forecastData.list[8].main.temp}F, the humidity is ${forecastData.list[8].main.humidity}%, the wind is blowing ${forecastData.list[8].wind.speed}mph`
-      document.body.appendChild(forecastPicture)
-      document.body.appendChild(forecastCity)
-      document.body.appendChild(forecastStatement)
+
+      forecastStatement.textContent = `${forecastData.list[8].weather[0].main} ${forecastData.list[8].weather[0].description}, 
+      ${forecastData.list[8].main.temp}F${forecastData.list[8].main.humidity}%${forecastData.list[8].wind.speed}mph`
+      forecastWeather.appendChild(day2);
+      day2.appendChild(forecastPicture)
+      day2.appendChild(forecastStatement)
     }
     function day3(){
+      var day3 = document.createElement('day3')
+      day3.setAttribute("class", "day")
+
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[16].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
-      forecastStatement.textContent = `${forecastData.list[16].weather[0].main}: it is currently ${forecastData.list[16].weather[0].description}, 
-      the temprature is ${forecastData.list[16].main.temp}F, the humidity is ${forecastData.list[16].main.humidity}%, the wind is blowing ${forecastData.list[16].wind.speed}mph`
-      document.body.appendChild(forecastPicture)
-      document.body.appendChild(forecastCity)
-      document.body.appendChild(forecastStatement)
+
+      forecastStatement.textContent = `${forecastData.list[16].weather[0].main} ${forecastData.list[16].weather[0].description}, 
+      ${forecastData.list[16].main.temp}F, ${forecastData.list[16].main.humidity}%${forecastData.list[16].wind.speed}mph`
+      forecastWeather.appendChild(day3);
+      day3.appendChild(forecastPicture)
+      day3.appendChild(forecastStatement)
     }
     function day4(){
+      var day4 = document.createElement('day4')
+      day4.setAttribute("class", "day")
+
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[24].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
-      forecastStatement.textContent = `${forecastData.list[24].weather[0].main}: it is currently ${forecastData.list[24].weather[0].description}, 
-      the temprature is ${forecastData.list[24].main.temp}F, the humidity is ${forecastData.list[24].main.humidity}%, the wind is blowing ${forecastData.list[24].wind.speed}mph`
-      document.body.appendChild(forecastPicture)
-      document.body.appendChild(forecastCity)
-      document.body.appendChild(forecastStatement)
+
+      forecastStatement.textContent = `${forecastData.list[24].weather[0].main} ${forecastData.list[24].weather[0].description}, 
+       ${forecastData.list[24].main.temp}F, ${forecastData.list[24].main.humidity}%, ${forecastData.list[24].wind.speed}mph`
+       forecastWeather.appendChild(day4);
+      day4.appendChild(forecastPicture)
+      day4.appendChild(forecastStatement)
     }
     function day5(){
+      var day5 = document.createElement('day5')
+      day5.setAttribute("class", "day")
+
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[32].weather[0].icon}@2x.png`
@@ -155,9 +180,11 @@ function displayForecastData(forecastData){
       forecastStatement.setAttribute("class", "forecastWeather")
       forecastStatement.textContent = `${forecastData.list[32].weather[0].main}${forecastData.list[32].weather[0].description}, 
       ${forecastData.list[32].main.temp}F, ${forecastData.list[32].main.humidity}%, ${forecastData.list[32].wind.speed}mph`
-      document.body.appendChild(forecastPicture)
-      document.body.appendChild(forecastCity)
-      document.body.appendChild(forecastStatement)
+
+      forecastWeather.appendChild(day5);
+      day5.appendChild(forecastPicture)
+      day5.appendChild(forecastStatement)
+
     }
     day1();
     day2();
