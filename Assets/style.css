@@ -3,7 +3,11 @@
     background-color: skyblue;
 }
 
-#searchBar{
+.title{
+    text-align: center;
+}
+
+.searchBar{
     margin: 3px;
     padding: 5px;
     text-align: center;
@@ -11,21 +15,58 @@
     font-weight: bold;
 }
 
-#currentWeather{
-    
+.currentWeather{
+    flex-wrap: wrap;
+   justify-content: center; 
+    border: 5px solid goldenrod;
+    border-radius: 10px;
+}
+
+.currentImg{
+    top: 50%;
+    left: 50%;
+
 }
 
 #forecastWeather{
-    
+
 }
 
-#forecastCity{
-    
+.forecastCity{
+     margin: 3px;
+    padding: 5px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-#day{
+.day{
     
+    display: flex; 
+    align-items: center;
+    justify-content: space-around;
+
 }
+
+/* .day1{
+    flex-basis: 20%;
+}
+
+.day2{
+    flex-basis: 20%;
+}
+
+.day3{
+    flex-basis: 20%;
+}
+
+.day4{
+    flex-basis: 20%;
+}
+
+.day5{
+    flex-basis: 20%;
+} */
 
 #forecastImg{
     

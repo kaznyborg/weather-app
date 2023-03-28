@@ -12,8 +12,6 @@ input.addEventListener('keyup', function(event) {
 var previousSearchHistory = localStorage.getItem('history')
 if (previousSearchHistory) {
     previousSearchHistory = JSON.parse(previousSearchHistory)
-    previousSearchHistory.push(location)
-    localStorage.setItem('history', JSON.stringify(previousSearchHistory))
 } else {
     previousSearchHistory = []
 }
@@ -54,18 +52,17 @@ function getLocation(callback) {
   }
 }
 
-function addToHistory() {
+function addToHistory(location) {
     var searchHistory = localStorage.getItem('history')
     if (searchHistory) {
         searchHistory = JSON.parse(searchHistory)
         for (var i = 0; i < searchHistory.length; i++) {
-            if (searchHistory[i] === location) {
+            if (searchHistory[i] === location)
                 return
-            } else {
-              searchHistory.push(location)
-              localStorage.setItem('history', JSON.stringify(searchHistory))
             }
-        }
+
+            searchHistory.push(location)
+            localStorage.setItem('history', JSON.stringify(searchHistory))
         }else {
             searchHistory = [location]
             localStorage.setItem('history', JSON.stringify(searchHistory))
@@ -83,13 +80,13 @@ function displayWeatherData(weatherData) {
   city.setAttribute("class", "currentCity");
   city.textContent = `${weatherData.name}`
   var currentWeatherStatement = document.createElement('p')
-  currentWeatherStatement.setAttribute("class", "currentWeather")
+  currentWeatherStatement.setAttribute("class", "currentWeatherStatement")
   currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}, 
   the temprature is ${weatherData.main.temp}F, the humidity is ${weatherData.main.humidity}%, the wind is blowing ${weatherData.wind.speed}mph`
   currentWeather.appendChild(weatherPicture)
   currentWeather.appendChild(city)
   currentWeather.appendChild(currentWeatherStatement)
-  addToHistory(location)
+  addToHistory(weatherData.name)
 }
 
 //display forcast
@@ -97,14 +94,14 @@ function displayForecastData(forecastData){
    console.log(forecastData)
    var forecastCity = document.createElement('div')
    forecastCity.setAttribute("class", "forecastCity")
-   forecastCity.textContent = `${forecastData.city.name}`
+   forecastCity.textContent = `${forecastData.city.name} 5 Day Forecast`
    forecastWeather.appendChild(forecastCity)
 
    function day1(){
       var day1 = document.createElement('day1')
-      day1.setAttribute("class", "day")
+      day1.setAttribute("class", "col-xs-2 col-half-offset day")
       var forecastPicture = document.createElement(`img`)
-      forecastPicture.setAttribute("class", "forcastImg")
+      forecastPicture.setAttribute("class", "forecastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[0].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
@@ -116,7 +113,7 @@ function displayForecastData(forecastData){
     }
     function day2(){
       var day2 = document.createElement('day2')
-      day2.setAttribute("class", "day")
+      day2.setAttribute("class", "col-xs-2 col-half-offset day")
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[8].weather[0].icon}@2x.png`
@@ -130,7 +127,7 @@ function displayForecastData(forecastData){
     }
     function day3(){
       var day3 = document.createElement('day3')
-      day3.setAttribute("class", "day")
+      day3.setAttribute("class", "col-xs-2 col-half-offset day")
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[16].weather[0].icon}@2x.png`
@@ -144,7 +141,7 @@ function displayForecastData(forecastData){
     }
     function day4(){
       var day4 = document.createElement('day4')
-      day4.setAttribute("class", "day")
+      day4.setAttribute("class", "col-xs-2 col-half-offset day")
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[24].weather[0].icon}@2x.png`
@@ -158,7 +155,7 @@ function displayForecastData(forecastData){
     }
     function day5(){
       var day5 = document.createElement('day5')
-      day5.setAttribute("class", "day")
+      day5.setAttribute("class", "col-xs-2 col-half-offset day")
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[32].weather[0].icon}@2x.png`
