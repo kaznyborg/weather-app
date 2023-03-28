@@ -1,7 +1,9 @@
 var input = document.querySelector('#input')
+
 var currentWeather = document.querySelector('.currentWeather')
 var forecastWeather = document.querySelector('.forecastWeather')
 var searchBar = document.querySelector(`.searchBar`)
+
 
 input.addEventListener('keyup', function(event) {
     if (event.key === 'Enter') {
@@ -83,6 +85,7 @@ function displayWeatherData(weatherData) {
   currentWeatherStatement.setAttribute("class", "currentWeatherStatement")
   currentWeatherStatement.textContent = `${weatherData.weather[0].main}: it is currently ${weatherData.weather[0].description}, 
   the temprature is ${weatherData.main.temp}F, the humidity is ${weatherData.main.humidity}%, the wind is blowing ${weatherData.wind.speed}mph`
+
   currentWeather.appendChild(weatherPicture)
   currentWeather.appendChild(city)
   currentWeather.appendChild(currentWeatherStatement)
@@ -92,6 +95,7 @@ function displayWeatherData(weatherData) {
 //display forcast
 function displayForecastData(forecastData){
    console.log(forecastData)
+
    var forecastCity = document.createElement('div')
    forecastCity.setAttribute("class", "forecastCity")
    forecastCity.textContent = `${forecastData.city.name} 5 Day Forecast`
@@ -105,6 +109,7 @@ function displayForecastData(forecastData){
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[0].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
+
       forecastStatement.textContent = `${forecastData.list[0].weather[0].main}${forecastData.list[0].weather[0].description}, 
      ${forecastData.list[0].main.temp}F ${forecastData.list[0].main.humidity}%${forecastData.list[0].wind.speed}mph`
       forecastWeather.appendChild(day1);
@@ -113,12 +118,14 @@ function displayForecastData(forecastData){
     }
     function day2(){
       var day2 = document.createElement('day2')
+
       day2.setAttribute("class", "col-xs-2 col-half-offset day")
       var forecastPicture = document.createElement(`img`)
       forecastPicture.setAttribute("class", "forcastImg")
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[8].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
+
       forecastStatement.textContent = `${forecastData.list[8].weather[0].main} ${forecastData.list[8].weather[0].description}, 
       ${forecastData.list[8].main.temp}F${forecastData.list[8].main.humidity}%${forecastData.list[8].wind.speed}mph`
       forecastWeather.appendChild(day2);
@@ -133,6 +140,7 @@ function displayForecastData(forecastData){
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[16].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
+
       forecastStatement.textContent = `${forecastData.list[16].weather[0].main} ${forecastData.list[16].weather[0].description}, 
       ${forecastData.list[16].main.temp}F, ${forecastData.list[16].main.humidity}%${forecastData.list[16].wind.speed}mph`
       forecastWeather.appendChild(day3);
@@ -147,6 +155,7 @@ function displayForecastData(forecastData){
       forecastPicture.src = `http://openweathermap.org/img/wn/${forecastData.list[24].weather[0].icon}@2x.png`
       var forecastStatement = document.createElement('p')
       forecastStatement.setAttribute("class", "forecastWeather")
+
       forecastStatement.textContent = `${forecastData.list[24].weather[0].main} ${forecastData.list[24].weather[0].description}, 
        ${forecastData.list[24].main.temp}F, ${forecastData.list[24].main.humidity}%, ${forecastData.list[24].wind.speed}mph`
        forecastWeather.appendChild(day4);
@@ -163,9 +172,11 @@ function displayForecastData(forecastData){
       forecastStatement.setAttribute("class", "forecastWeather")
       forecastStatement.textContent = `${forecastData.list[32].weather[0].main}${forecastData.list[32].weather[0].description}, 
       ${forecastData.list[32].main.temp}F, ${forecastData.list[32].main.humidity}%, ${forecastData.list[32].wind.speed}mph`
+
       forecastWeather.appendChild(day5);
       day5.appendChild(forecastPicture)
       day5.appendChild(forecastStatement)
+
     }
     day1();
     day2();
